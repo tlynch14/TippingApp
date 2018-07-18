@@ -11,15 +11,20 @@ import UIKit
 class ViewController: UITableViewController {
 
     let cellID = "cellID"
-    let names = ["Alex","Bill","Big Willie Smith","Jane","Tom","Stuart","Pardes","Big Mike","Elvis","FishesKC"]
-    let anothernames = ["Adam","Kevin","Wayne","Big Shaq"]
+    
+    let twoDimensionalArray = [
+    ["Alex","Bill","Big Willie Smith","Jane","Tom","Stuart","Pardes","Big Mike","Elvis","FishesKC"],
+    ["Cameron","Carl","Chris","Christina","Carlton"],
+    ["David","Donald","Daniel","Danielle"],
+    ["Elvis","Edward","Ellie"]
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        navigationItem.title = "Fight me you prick" // Displays Navigation Item on Load-up
+        navigationItem.title = "Contacts" // Displays Navigation Item on Load-up
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
@@ -27,34 +32,31 @@ class ViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3  // Create dynamically
+        return twoDimensionalArray.count  // Create dynamically
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { // Creates Headers above each section
         let label = UILabel()
-        label.text = "Y'know"
+        label.text = "Sub-Section Header" // Can this be rendered dynamically?
         label.backgroundColor = UIColor.lightGray
         return label
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return names.count
-        }
-        return anothernames.count   // refactor this to count the length of the input array
+    return twoDimensionalArray[section].count
     }
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
-        let name = self.names[indexPath.row]
+        let name = twoDimensionalArray[indexPath.section][indexPath.row] // I.e. section 0 row 0 returns contact one
+        
         cell.textLabel?.text = name
         cell.textLabel?.text = "\(name) Section: \(indexPath.section) Row: \(indexPath.row)"
         
         return cell
         
     }
-    
     
 }
